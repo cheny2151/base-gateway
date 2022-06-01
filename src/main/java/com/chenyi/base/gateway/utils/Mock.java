@@ -1,12 +1,11 @@
-package com.shopline.ai.kf.gateway.utils;
+package com.chenyi.base.gateway.utils;
 
-import com.shopline.ai.kf.gateway.entity.AuthUrl;
+import com.chenyi.base.gateway.entity.AuthUrl;
 import org.springframework.web.util.pattern.PathPatternParser;
 import reactor.core.publisher.Mono;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author by chenyi

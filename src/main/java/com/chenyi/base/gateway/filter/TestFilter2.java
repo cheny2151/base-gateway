@@ -1,4 +1,4 @@
-package com.shopline.ai.kf.gateway.filter;
+package com.chenyi.base.gateway.filter;
 
 import lombok.Data;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
@@ -8,8 +8,6 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.time.Duration;
-import java.time.temporal.ChronoUnit;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 

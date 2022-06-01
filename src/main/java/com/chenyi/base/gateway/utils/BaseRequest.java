@@ -1,11 +1,10 @@
-package com.shopline.ai.kf.gateway.utils;
+package com.chenyi.base.gateway.utils;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.UUID;
 
 /**
  * 基础请求协议包装

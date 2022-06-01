@@ -1,15 +1,15 @@
-package com.shopline.ai.kf.gateway.filter.global;
+package com.chenyi.base.gateway.filter.global;
 
+import com.chenyi.base.gateway.constants.GatewayConstants;
+import com.chenyi.base.gateway.constants.ResponseCode;
+import com.chenyi.base.gateway.utils.BaseResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.shopline.ai.kf.gateway.constants.GatewayConstants;
-import com.shopline.ai.kf.gateway.constants.ResponseCode;
-import com.shopline.ai.kf.gateway.entity.AuthUrl;
-import com.shopline.ai.kf.gateway.entity.User;
-import com.shopline.ai.kf.gateway.utils.AuthPathPattern;
-import com.shopline.ai.kf.gateway.utils.BaseResponse;
-import com.shopline.ai.kf.gateway.utils.Mock;
-import com.shopline.ai.kf.gateway.utils.SessionUtils;
+import com.chenyi.base.gateway.entity.AuthUrl;
+import com.chenyi.base.gateway.entity.User;
+import com.chenyi.base.gateway.utils.AuthPathPattern;
+import com.chenyi.base.gateway.utils.Mock;
+import com.chenyi.base.gateway.utils.SessionUtils;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;

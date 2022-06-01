@@ -1,7 +1,7 @@
-package com.shopline.ai.kf.gateway.filter;
+package com.chenyi.base.gateway.filter;
 
-import com.shopline.ai.kf.gateway.constants.GatewayConstants;
-import com.shopline.ai.kf.gateway.entity.User;
+import com.chenyi.base.gateway.constants.GatewayConstants;
+import com.chenyi.base.gateway.entity.User;
 import lombok.Data;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.OrderedGatewayFilter;
@@ -10,8 +10,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.session.ReactiveSessionRepository;
 import org.springframework.session.Session;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 import javax.annotation.Resource;
 import java.util.Arrays;

@@ -1,4 +1,4 @@
-package com.shopline.ai.kf.gateway.constants;
+package com.chenyi.base.gateway.constants;
 
 public enum ResponseCode {
 

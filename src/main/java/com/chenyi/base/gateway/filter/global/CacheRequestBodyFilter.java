@@ -1,6 +1,6 @@
-package com.shopline.ai.kf.gateway.filter.global;
+package com.chenyi.base.gateway.filter.global;
 
-import com.shopline.ai.kf.gateway.constants.GatewayConstants;
+import com.chenyi.base.gateway.constants.GatewayConstants;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.cloud.gateway.support.ServerWebExchangeUtils;

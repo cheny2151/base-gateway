@@ -1,4 +1,4 @@
-package com.shopline.ai.kf.gateway.entity;
+package com.chenyi.base.gateway.entity;
 
 import lombok.Data;
 

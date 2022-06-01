@@ -1,8 +1,8 @@
-package com.shopline.ai.kf.gateway.utils;
+package com.chenyi.base.gateway.utils;
 
 import cn.cheny.toolbox.spring.SpringUtils;
-import com.shopline.ai.kf.gateway.constants.GatewayConstants;
-import com.shopline.ai.kf.gateway.entity.User;
+import com.chenyi.base.gateway.constants.GatewayConstants;
+import com.chenyi.base.gateway.entity.User;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.session.ReactiveSessionRepository;

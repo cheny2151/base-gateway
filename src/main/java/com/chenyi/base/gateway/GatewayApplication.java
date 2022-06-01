@@ -1,4 +1,4 @@
-package com.shopline.ai.kf.gateway;
+package com.chenyi.base.gateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

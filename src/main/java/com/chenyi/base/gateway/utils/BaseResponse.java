@@ -1,11 +1,8 @@
-package com.shopline.ai.kf.gateway.utils;
+package com.chenyi.base.gateway.utils;
 
-import com.alibaba.fastjson.JSON;
-import com.shopline.ai.kf.gateway.constants.ResponseCode;
+import com.chenyi.base.gateway.constants.ResponseCode;
 import lombok.Data;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
 
 @Data
