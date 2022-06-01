@@ -1,0 +1,39 @@
+spring:
+  application:
+    name: base-gateway
+  cloud:
+    gateway:
+      default-filters:
+        - StripPrefix=1
+      routes:
+        - id: resource
+          uri: lb://service-name
+          predicates:
+          - Path=/resource/**
+          filters:
+          - TestFilter=1
+          - TestFilter2=1
+      discovery:
+        locator:
+          enabled: false
+          lower-case-service-id: true
+    nacos:
+      discovery:
+        enabled: true
+        server-addr: my.nacos.com:6801
+        namespace: develop
+  ## redis
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    timeout: 10000ms
+    database: 0
+    lettuce:
+      pool:
+        max-active: 16
+        max-idle: 16
+        max-wait: 10000ms
+
+  session:
+    redis:
+      namespace: base-gateway:session
