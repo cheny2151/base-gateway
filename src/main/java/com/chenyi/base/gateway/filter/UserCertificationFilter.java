@@ -11,6 +11,7 @@ import com.chenyi.base.gateway.utils.SessionUtils;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
+import org.springframework.cloud.gateway.filter.NettyWriteResponseFilter;
 import org.springframework.cloud.gateway.filter.OrderedGatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.core.io.buffer.DataBuffer;
@@ -34,6 +35,8 @@ import java.util.Optional;
 @Component
 @Slf4j
 public class UserCertificationFilter extends AbstractGatewayFilterFactory<UserCertificationFilter.Config> {
+
+    public final static int USER_CERTIFICATION_ORDER = NettyWriteResponseFilter.WRITE_RESPONSE_FILTER_ORDER - 100;
 
     @Resource
     private ReactiveSessionRepository<Session> sessionRepository;
@@ -87,7 +90,7 @@ public class UserCertificationFilter extends AbstractGatewayFilterFactory<UserCe
             } else {
                 return chain.filter(exchange);
             }
-        }, -100);
+        }, USER_CERTIFICATION_ORDER);
     }
 
     @Data
