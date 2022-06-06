@@ -11,15 +11,20 @@ spring:
           predicates:
           - Path=/resource/**
           filters:
-          - TestFilter=1
           - TestFilter2=1
+          - name: UserCertificationFilter
+            args:
+              loginUrl: /api/usr/login/verify
+              infoUrl: /api/usr/session/info
+              logoutUrl: /api/usr/session/logout
+              expireOfDay: 30
       discovery:
         locator:
           enabled: false
           lower-case-service-id: true
     nacos:
       discovery:
-        enabled: true
+        enabled: false
         server-addr: my.nacos.com:6801
         namespace: develop
   ## redis
