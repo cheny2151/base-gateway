@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 public class ExchangeResponseUtils {
 
     /**
-     * 重写响应结果
+     * 消费响应结果
      *
      * @param exchange  ServerWebExchange
      * @param chain     GatewayFilterChain
