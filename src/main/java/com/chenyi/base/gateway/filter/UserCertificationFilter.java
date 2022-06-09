@@ -51,7 +51,7 @@ public class UserCertificationFilter extends AbstractGatewayFilterFactory<UserCe
             String curUrl = exchange.getRequest().getURI().getRawPath();
             if (config.getLoginUrl().equals(curUrl)) {
                 // 请求登陆
-                return ExchangeResponseUtils.rewrite(exchange, chain, body -> {
+                return ExchangeResponseUtils.apply(exchange, chain, body -> {
                     LoginResp dataResult = JSON.parseObject(body, LoginResp.class);
                     if (dataResult.getCode() == 200) {
                         // 登陆成功

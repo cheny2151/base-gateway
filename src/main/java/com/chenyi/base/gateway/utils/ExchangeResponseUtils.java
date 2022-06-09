@@ -16,6 +16,7 @@ import reactor.core.publisher.Mono;
 
 import java.nio.charset.StandardCharsets;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * 响应工具类
@@ -28,29 +29,31 @@ public class ExchangeResponseUtils {
     /**
      * 重写响应结果
      *
-     * @param exchange    ServerWebExchange
-     * @param chain       GatewayFilterChain
-     * @param rewriteFunc 重写的逻辑
+     * @param exchange  ServerWebExchange
+     * @param chain     GatewayFilterChain
+     * @param applyFunc 消费的逻辑
      * @return Mono<Void>
      */
-    public static Mono<Void> rewrite(ServerWebExchange exchange, GatewayFilterChain chain, Function<String, ? extends Mono<String>> rewriteFunc) {
+    public static Mono<Void> apply(ServerWebExchange exchange, GatewayFilterChain chain, Function<String, Mono<?>> applyFunc) {
         ServerHttpResponse originalResponse = exchange.getResponse();
         DataBufferFactory bufferFactory = originalResponse.bufferFactory();
         ServerHttpResponseDecorator decoratedResponse = new ServerHttpResponseDecorator(originalResponse) {
             @Override
             public Mono<Void> writeWith(Publisher<? extends DataBuffer> body) {
                 if (body instanceof Flux) {
-                    Flux<? extends DataBuffer> fluxBody = (Flux<? extends DataBuffer>) body;
-                    return super.writeWith(fluxBody.flatMap(dataBuffer -> {
+                    Flux<DataBuffer> modifyBody = Flux.from(body).buffer().flatMap(dataBuffers -> {
                         // probably should reuse buffers
-                        byte[] content = new byte[dataBuffer.readableByteCount()];
-                        dataBuffer.read(content);
-                        //释放掉内存
-                        DataBufferUtils.release(dataBuffer);
-                        String bodyStr = new String(content, StandardCharsets.UTF_8);
-                        Mono<String> writer = rewriteFunc.apply(bodyStr);
-                        return writer.map(rewriteBody -> bufferFactory.wrap(rewriteBody.getBytes()));
-                    }));
+                        String bodyStr = dataBuffers.stream().map(dataBuffer -> {
+                            byte[] content = new byte[dataBuffer.readableByteCount()];
+                            dataBuffer.read(content);
+                            //释放掉内存
+                            DataBufferUtils.release(dataBuffer);
+                            return new String(content, StandardCharsets.UTF_8);
+                        }).collect(Collectors.joining());
+                        Mono<?> mono = applyFunc.apply(bodyStr);
+                        return mono.then(Mono.just(bufferFactory.wrap(bodyStr.getBytes())));
+                    });
+                    return super.writeWith(modifyBody);
                 }
                 // if body is not a flux. never got there.
                 return super.writeWith(body);
