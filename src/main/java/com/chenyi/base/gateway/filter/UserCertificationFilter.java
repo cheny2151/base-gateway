@@ -49,7 +49,7 @@ public class UserCertificationFilter extends AbstractGatewayFilterFactory<UserCe
     public GatewayFilter apply(Config config) {
         return new OrderedGatewayFilter((exchange, chain) -> {
             String curUrl = exchange.getRequest().getURI().getRawPath();
-            if (config.getLoginUrl().equals(curUrl)) {
+            if (config.getLoginUrl().equals(curUrl) && HttpStatus.OK.equals(exchange.getResponse().getStatusCode())) {
                 // 请求登陆
                 return ExchangeResponseUtils.apply(exchange, chain, body -> {
                     LoginResp dataResult = JSON.parseObject(body, LoginResp.class);
