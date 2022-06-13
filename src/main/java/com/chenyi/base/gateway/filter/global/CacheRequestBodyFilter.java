@@ -5,6 +5,7 @@ import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.cloud.gateway.support.ServerWebExchangeUtils;
 import org.springframework.core.Ordered;
+import org.springframework.http.MediaType;
 import org.springframework.http.codec.HttpMessageReader;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.HandlerStrategies;
@@ -28,13 +29,18 @@ public class CacheRequestBodyFilter implements GlobalFilter, Ordered {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        return ServerWebExchangeUtils.cacheRequestBody(exchange, (serverHttpRequest) -> {
-            ServerWebExchange delegate = exchange.mutate().request(serverHttpRequest).build();
-            return ServerRequest.create(delegate, messageReaders).bodyToMono(Map.class)
-                    .doOnNext((objectValue) -> exchange.getAttributes().put(GatewayConstants.Content.REQUEST_BODY_OBJECT_KEY, objectValue))
-                    .then(chain.filter(delegate))
-                    .doFinally(type -> exchange.getAttributes().remove(GatewayConstants.Content.REQUEST_BODY_OBJECT_KEY));
-        });
+        MediaType contentType = exchange.getRequest().getHeaders().getContentType();
+        if (MediaType.APPLICATION_JSON.equals(contentType)) {
+            return ServerWebExchangeUtils.cacheRequestBody(exchange, (serverHttpRequest) -> {
+                ServerWebExchange delegate = exchange.mutate().request(serverHttpRequest).build();
+                return ServerRequest.create(delegate, messageReaders).bodyToMono(Map.class)
+                        .doOnNext((objectValue) -> exchange.getAttributes().put(GatewayConstants.Content.REQUEST_BODY_OBJECT_KEY, objectValue))
+                        .then(chain.filter(delegate))
+                        .doFinally(type -> exchange.getAttributes().remove(GatewayConstants.Content.REQUEST_BODY_OBJECT_KEY));
+            });
+        } else {
+            return chain.filter(exchange);
+        }
     }
 
     @Override
